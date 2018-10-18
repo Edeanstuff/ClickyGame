@@ -51,7 +51,7 @@ export default class Header extends Component {
     render() {
         return (
             <div clasName="bg-dark">
-                <h1 className="navbar bg-dark mali">
+                <h1 className="navbar mali">
                     <div>Clicky Game</div>  
                     <div className="text-center" id="clickGame" onClick={this.onClick}>{this.state.game}</div>
                     <div>Score:{this.state.score}/6</div>
