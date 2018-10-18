@@ -24,36 +24,46 @@ export default class Header extends Component {
         super(props);
         this.state = {
             score: 0,
-            val: ''
+            val: [],
+            game: 'Click an Image to Begin'
         }
     }
 
-    onClick = () => {
+    onClick = (evt) => {
         if (this.state.score > 4) {
             alert("you win");
-            this.setState({score: this.state.score - 5 })
-        } else {
-            this.setState({ score: this.state.score + 1 });
-            console.log(chosen);
-            test1();
-        }
+            this.setState({ score: this.state.score - 5 })
+            chosen = [];
+        } else if (this.state.val.indexOf(evt.target.getAttribute('data-val')) !== -1) {
+                this.setState({ game: "That was Wrong, are you dumb?" });
+                console.log(chosen);
+                console.log(evt.target.getAttribute('data-val'))
+                alert("you lose");
+                this.setState({val: []});
+                this.setState({ score: 0 })
+            } else {
+                this.state.val.push(evt.target.getAttribute('data-val'));
+                this.setState({ score: this.state.score + 1 });
+                this.setState({ game: "That was Correct!" });
+                test1();
+            }
     }
     render() {
         return (
-            <div>
-                <h1 className="navbar">
-                    <div>Clicky Game</div>
-                    <div className="text-center" id="clickGame" onClick={this.onClick}>Click an Image Begin</div>
+            <div clasName="bg-dark">
+                <h1 className="navbar bg-dark mali">
+                    <div>Clicky Game</div>  
+                    <div className="text-center" id="clickGame" onClick={this.onClick}>{this.state.game}</div>
                     <div>Score:{this.state.score}/6</div>
                 </h1>
                 <div className="bg-dark">
-                    <div onClick={this.onClick} className="bg-danger container border border-dark" id="gamearea">
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[0]}></img>
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[1]} val={pics[1]}></img>
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[2]} val={pics[2]}></img>
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[3]} val={pics[3]}></img>
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[4]} val={pics[4]}></img>
-                        <img className="w-25 h-25" onClick={this.onClick} src={pics[5]} val={pics[5]}></img>
+                    <div className="bg-danger container border border-dark" id="gamearea">
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[0]} data-val={pics[0]} />
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[1]} data-val={pics[1]} />
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[2]} data-val={pics[2]} />
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[3]} data-val={pics[3]} />
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[4]} data-val={pics[4]} />
+                        <img className="w-25 h-25" onClick={this.onClick} src={pics[5]} data-val={pics[5]} />
                     </div>
                 </div>
             </div>
